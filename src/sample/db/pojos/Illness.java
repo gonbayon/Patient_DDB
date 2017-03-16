@@ -1,25 +1,24 @@
 package sample.db.pojos;
 import java.io.Serializable;
 import java.util.List;
-public class Chronic implements Serializable {
+public class Illness implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6110426865531354588L;
+	private static final long serialVersionUID = 7740673539295188042L;
 	private int id;
 	private String name;
 	private List <Patient> patient;
-	private List <Food> rejects;
-	private List <Medication> rej_med;
-	public Chronic(){
+	private List <Medication> treats;
+	
+	public Illness(){
+		
 	}
-	public Chronic(String _name,List <Patient> _patient,
-			List <Food> _rejects,List <Medication> _rej){
-		name=_name;
-		patient=_patient;
-		rejects=_rejects;
-		rej_med=_rej;
+	public Illness(String name,List <Patient>p,List <Medication>m){
+		this.name=name;
+		patient=p;
+		treats=m;
 	}
 	@Override
 	public int hashCode() {
@@ -36,7 +35,7 @@ public class Chronic implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Chronic other = (Chronic) obj;
+		Illness other = (Illness) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -59,19 +58,11 @@ public class Chronic implements Serializable {
 	public void setPatient(List<Patient> patient) {
 		this.patient = patient;
 	}
-	public List<Food> getRejects() {
-		return rejects;
+	public List<Medication> getTreats() {
+		return treats;
 	}
-	public void setRejects(List<Food> rejects) {
-		this.rejects = rejects;
+	public void setTreats(List<Medication> treats) {
+		this.treats = treats;
 	}
-	public List<Medication> getRej_med() {
-		return rej_med;
-	}
-	public void setRej_med(List<Medication> rej_med) {
-		this.rej_med = rej_med;
-	}
-	
-	
 	
 }

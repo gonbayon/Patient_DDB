@@ -1,23 +1,29 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.List;
 enum Week{MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY};
 public class Schedule implements Serializable{
 
-	private static final long serialVersionUID = 5791258505255208298L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6786141699312365779L;
 	private int id;
 	private String start,end;
 	private Week day;
+	private List <Doctor> doc;
+	private List <Visitor> vis;
 	
 	public Schedule(){
-		id=(Integer) null;
-		start=null;
-		end=null;
-		day=null;
+		
 	}
-	public Schedule(String _start,String _end, Week _day){
+	public Schedule(String _start,String _end, Week _day
+			,List <Doctor> d,List <Visitor> v){
 		start=_start;
 		end=_end;
 		day=_day;
+		doc=d;
+		vis=v;
 	}
 	@Override
 	public int hashCode() {
@@ -62,6 +68,18 @@ public class Schedule implements Serializable{
 	}
 	public void setDay(Week day) {
 		this.day = day;
+	}
+	public List<Doctor> getDoc() {
+		return doc;
+	}
+	public void setDoc(List<Doctor> doc) {
+		this.doc = doc;
+	}
+	public List<Visitor> getVis() {
+		return vis;
+	}
+	public void setVis(List<Visitor> vis) {
+		this.vis = vis;
 	}
 	
 

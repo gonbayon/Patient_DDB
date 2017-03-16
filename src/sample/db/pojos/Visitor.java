@@ -1,18 +1,25 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.List;
 
 public class Visitor implements Serializable {
 
-	private static final long serialVersionUID = -5664026289077853989L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7772062054424291787L;
 	private int id;
 	private String name;
+	private Patient patient;
+	private List <Schedule> sche;
 	
 	public Visitor (){
-		super();
+		
 	}
-	public Visitor(String _name){
-		super();
+	public Visitor(String _name, Patient p, List <Schedule> s){
 		name=_name;
+		patient=p;
+		sche=s;
 	}
 	@Override
 	public int hashCode() {
@@ -45,6 +52,18 @@ public class Visitor implements Serializable {
 	}
 	public void setId(int _id){
 		id=_id;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+	public List<Schedule> getSche() {
+		return sche;
+	}
+	public void setSche(List<Schedule> sche) {
+		this.sche = sche;
 	}
 	
 }
