@@ -16,7 +16,16 @@ public class Patient implements Serializable {
 	private List <Visitor> visitor;
 	
 	public Patient(){
-		super();
+		name=null;
+		surname=null;
+		room_nº=(Integer) null;
+		In_charge=null;
+		lookedafter=null;
+		//illness=null;
+		//med=null;
+		chronic=null;
+		food=null;
+		visitor=null;
 		
 	}
 	public Patient(String _name,String _surname,int room

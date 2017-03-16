@@ -1,16 +1,25 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.List;
 public class Chronic implements Serializable {
 
-	private static final long serialVersionUID = -8152478955758638140L;
 	private int id;
 	private String name;
+	private List <Patient> patient;
+	private List <Food> rejects;
+	//private List <Medication> rej_med;
 	public Chronic(){
 		id=(Integer) null;
 		name=null;
+		patient=null;
+		rejects=null;
+		//rej_med=null;
 	}
-	public Chronic(String _name){
+	public Chronic(String _name,List <Patient> _patient,
+			List <Food> _rejects/*,List <Medication> _rej*/){
 		name=_name;
+		patient=_patient;
+		rejects=_rejects;
 	}
 	@Override
 	public int hashCode() {
