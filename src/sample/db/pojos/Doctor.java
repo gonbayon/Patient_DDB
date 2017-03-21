@@ -25,7 +25,7 @@ public class Doctor implements Serializable{
 		In_charge=_list;
 		Looking=_list1;
 		schedule=_sch;
-		//fioguhnwvñeoighvnwñ
+		//Marvin
 	}
 	@Override
 	public int hashCode() {
