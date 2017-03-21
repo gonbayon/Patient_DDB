@@ -25,7 +25,7 @@ public class Doctor implements Serializable{
 		In_charge=_list;
 		Looking=_list1;
 		schedule=_sch;
-//hola
+
 	}
 	@Override
 	public int hashCode() {
@@ -76,6 +76,7 @@ public class Doctor implements Serializable{
 	}
 	public void setIn_charge(List<Patient> in_charge) {
 		In_charge = in_charge;
+		//hola
 	}
 	public List<Patient> getLooking() {
 		return Looking;
