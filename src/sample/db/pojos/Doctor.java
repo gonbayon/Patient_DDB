@@ -76,6 +76,7 @@ public class Doctor implements Serializable{
 	}
 	public void setIn_charge(List<Patient> in_charge) {
 		In_charge = in_charge;
+		//hola
 	}
 	public List<Patient> getLooking() {
 		return Looking;
