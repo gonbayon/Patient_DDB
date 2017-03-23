@@ -5,11 +5,8 @@ import java.util.List;
 public class Patient implements Serializable {
 
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6582686535638501660L;
-	private int id,room_nº;
+	private static final long serialVersionUID = 5740942595491889385L;
+	private int id,room_n;
 	private String name,surname;
 	private Doctor In_charge;
 	private List <Doctor> lookedafter;
@@ -21,13 +18,19 @@ public class Patient implements Serializable {
 	
 	public Patient(){
 	}
+	public Patient (String _name, String _surname, int n){
+		name=_name;
+		surname=_surname;
+		room_n=n;
+		
+	}
 	public Patient(String _name,String _surname,int room
 			,Doctor _doctor, List <Doctor> _look
 			,Illness _illness,List <Medication> _med,
 			Chronic _chronic,List <Food> _food,List <Visitor> _visitor){
 		name=_name;
 		surname=_surname;
-		room_nº=room;
+		room_n=room;
 		In_charge=_doctor;
 		lookedafter=_look;
 		illness=_illness;
@@ -60,8 +63,8 @@ public class Patient implements Serializable {
 	public int getId() {
 		return id;
 	}
-	public int getRoom_nº() {
-		return room_nº;
+	public int getRoom_n() {
+		return room_n;
 	}
 	public String getName() {
 		return name;
@@ -72,8 +75,8 @@ public class Patient implements Serializable {
 	public void setId(int _id){
 		id=_id;
 	}
-	public void setRoom_nº(int room_nº) {
-		this.room_nº = room_nº;
+	public void setRoom_nº(int room_n) {
+		this.room_n = room_n;
 	}
 	public void setName(String name) {
 		this.name = name;
