@@ -48,7 +48,7 @@ public class Menu {
             	j.insertPatient(p);
             	break;
             case 4:
-            	j.select();
+            	System.out.println(j.select());
             	break;
             case 5:
             	j.disconnect();
@@ -57,7 +57,7 @@ public class Menu {
             	System.exit(0);
             	break;
         }
-}while(contador<4);
+}while(true);
 	}
 }
 

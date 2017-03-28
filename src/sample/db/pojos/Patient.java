@@ -5,7 +5,10 @@ import java.util.List;
 public class Patient implements Serializable {
 
 
-	private static final long serialVersionUID = 5740942595491889385L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3000387307546279723L;
 	private int id,room_n;
 	private String name,surname;
 	private Doctor In_charge;
@@ -126,5 +129,7 @@ public class Patient implements Serializable {
 	public void setMed(List<Medication> med) {
 		this.med = med;
 	}
-	
+	public String toString(){
+		return "\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n;
+	}
 }
