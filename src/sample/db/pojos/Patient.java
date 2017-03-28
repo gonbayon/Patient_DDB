@@ -3,8 +3,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Patient implements Serializable {
-
-
 	/**
 	 * 
 	 */
@@ -130,6 +128,6 @@ public class Patient implements Serializable {
 		this.med = med;
 	}
 	public String toString(){
-		return "\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n;
+		return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n;
 	}
 }
