@@ -3,6 +3,7 @@ package sample.db.patient;
 
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 import sample.db.pojos.Patient;
@@ -37,13 +38,22 @@ public boolean createTable() throws SQLException{
 	stmt1.close();
 	return true;
 }
-public boolean insertPatient(Patient patient) throws SQLException{
+public void insertPatient(Patient patient) throws SQLException{
+	String sql = "INSERT INTO patient (name, surname , room_n) "
+			+ "VALUES (?,?,?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, patient.getName());
+	prep.setString(2, patient.getSurname());
+	prep.setInt(3, patient.getRoom_n());
+	prep.executeUpdate();
+	prep.close();
+}
+public void deletePatient(int id) throws SQLException{
 	Statement stmt = c.createStatement();
-	String sql = "INSERT INTO patient (name, surname,room_n) "
-			+ "VALUES ('" + patient.getName() + "', '" + patient.getSurname()	+ "', "+patient.getRoom_n()+");";
-	stmt.executeUpdate(sql);
-	stmt.close();
-	return true;
+	String sql = "DELETE FROM employees WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	prep.executeUpdate();
 }
 public List<Patient> select() throws SQLException{
 	Statement stmt = c.createStatement();
@@ -51,10 +61,12 @@ public List<Patient> select() throws SQLException{
 	ResultSet rs = stmt.executeQuery(sql);
 	List<Patient>show=new LinkedList();
 	while (rs.next()) {
+		int id=rs.getInt("id");
 		int n = rs.getInt("room_n");
 		String name = rs.getString("name");
 		String surname = rs.getString("surname");
 		Patient patient = new Patient(name,surname,n );
+		patient.setId(id);
 		show.add(patient);
 	}
 	rs.close();

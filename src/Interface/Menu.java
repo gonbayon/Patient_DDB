@@ -13,7 +13,8 @@ public class Menu {
             + "2. Create table\n"
             + "3. Insert\n"
             + "4. Select\n"
-            + "5. Disconnect\n"
+            + "5. Delete\n"
+            + "6. Disconnect\n"
             + "0. Salir\n\n"
             + "Introduzca una opcion:");
     }
@@ -51,6 +52,11 @@ public class Menu {
             	System.out.println(j.select());
             	break;
             case 5:
+            	System.out.println("Enters the id from the patient you want to delete: ");
+            	int id=Integer.parseInt(consola.readLine());
+            	j.deletePatient(id);
+            	break;
+            case 6:
             	j.disconnect();
             	break;
             case 0:
