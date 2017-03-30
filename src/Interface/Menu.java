@@ -47,6 +47,7 @@ public class Menu {
             	rn=Integer.parseInt(consola.readLine());
             	p=new Patient(n,s,rn);
             	j.insertPatient(p);
+            	//hola
             	break;
             case 4:
             	System.out.println(j.select());
