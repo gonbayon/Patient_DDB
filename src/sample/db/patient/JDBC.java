@@ -3,7 +3,6 @@ package sample.db.patient;
 
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 import sample.db.pojos.Patient;
@@ -27,7 +26,7 @@ public void connect(){
 public void disconnect() throws SQLException{
 	c.close();
 }
-public boolean createTable() throws SQLException{
+public void createTable() throws SQLException{
 	Statement stmt1 = c.createStatement();
 	String sql1 = "CREATE TABLE patient"
 			   + "(id       INTEGER  PRIMARY KEY AUTOINCREMENT ,"
@@ -36,7 +35,6 @@ public boolean createTable() throws SQLException{
 			   + "room_n   INTEGER  NOT NULL)";
 	stmt1.executeUpdate(sql1);
 	stmt1.close();
-	return true;
 }
 public void insertPatient(Patient patient) throws SQLException{
 	String sql = "INSERT INTO patient (name, surname , room_n) "
@@ -50,9 +48,9 @@ public void insertPatient(Patient patient) throws SQLException{
 }
 public void deletePatient(int id) throws SQLException{
 	Statement stmt = c.createStatement();
-	String sql = "DELETE FROM employees WHERE id=?";
+	String sql = "DELETE FROM patient WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
-	prep.setInt(1, id);
+	prep.setInt(1,id);
 	prep.executeUpdate();
 }
 public List<Patient> select() throws SQLException{
@@ -73,6 +71,36 @@ public List<Patient> select() throws SQLException{
 	stmt.close();
 	return show;
 }
-
+public void dropTable() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE patient";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();
+}
+public Patient searchPatient(int room) throws SQLException{
+	Patient patient=null;
+	String sql = "SELECT * FROM patient WHERE room_n = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, room);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int id = rs.getInt("id");
+		String name = rs.getString("name");
+		String surname = rs.getString("surname");
+		int room_n = rs.getInt("room_n");
+		patient = new Patient( name, surname,room_n);
+		patient.setId(id);
+}
+	rs.close();
+	prep.close();
+	return patient;
+}
+public void updatePatient(int id,int room) throws SQLException{
+	String sql = "UPDATE patient SET room_n=? WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, room);
+	prep.setInt(2, id);
+	prep.executeUpdate();
+}
 }
 

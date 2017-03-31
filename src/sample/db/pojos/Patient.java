@@ -128,6 +128,6 @@ public class Patient implements Serializable {
 		this.med = med;
 	}
 	public String toString(){
-		return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n;
+		return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
 	}
 }
