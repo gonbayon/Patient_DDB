@@ -43,6 +43,7 @@ public class Menu {
                 //j.createTablePat();
                 j.createTableFood();
                 j.createTableSalt();
+                j.createTableMedic();
             	}catch(NullPointerException np){
             		System.out.println("You first need to connect to a DDB");
             	}
