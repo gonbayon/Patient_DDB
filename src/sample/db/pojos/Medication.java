@@ -14,8 +14,9 @@ public class Medication implements Serializable {
 	private List <Illness> treats;
 	private List <Chronic> rejects;
 	
-	public Medication(){
-		
+	public Medication(String n, String a){
+		name=n;
+		agent=a;
 	}
 	public Medication(String n,String a,
 			List <Patient> p,List <Illness> i,

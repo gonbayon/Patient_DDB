@@ -10,6 +10,7 @@ import sample.db.pojos.*;
 public class JDBC {
 String name;
 Connection c;
+
 public JDBC(String n){
 	name=n;
 }
@@ -54,6 +55,15 @@ public void createTableSalt() throws SQLException{
 			+ "max	REAL NULL)";
 	stmt8.executeUpdate(sql8);
 	stmt8.close();
+}
+public void createTableMedic() throws SQLException{
+	Statement s=c.createStatement();
+	String sql="CREATE TABLE medication"
+			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "name	TEXT NULL, "
+			+ "agent TEXT NULL, ";
+	s.executeUpdate(sql);
+	s.close();
 }
 public void assignSaltFood(int f,int s) throws SQLException{
 	String sql="UPDATE food SET id_salt=? WHERE id=?";
@@ -100,6 +110,13 @@ public void deletePatient(int id) throws SQLException{
 public void deleteFood(int id) throws SQLException{
 	Statement stmt = c.createStatement();
 	String sql = "DELETE FROM food WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1,id);
+	prep.executeUpdate();
+}
+public void deleteMedicat(int id) throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "DELETE FROM medication WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
 	prep.setInt(1,id);
 	prep.executeUpdate();
@@ -157,6 +174,23 @@ public List<Food> selectF() throws SQLException{
 	stmt.close();
 	return show;
 }
+public List<Medication> selectM() throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "SELECT * FROM medication";
+	ResultSet rs = stmt.executeQuery(sql);
+	List<Medication>show=new LinkedList();
+	while (rs.next()) {
+		int id=rs.getInt("id");
+		String name = rs.getString("name");
+		String agent = rs.getString("agent");
+		Medication m = new Medication(name, agent);
+		m.setId(id);
+		show.add(m);
+	}
+	rs.close();
+	stmt.close();
+	return show;
+}
 public List <Salt> selectS() throws SQLException{
 	Statement stmt = c.createStatement();
 	String sql = "SELECT * FROM salt";
@@ -183,6 +217,18 @@ public void dropTableP() throws SQLException{
 public void dropTableF() throws SQLException{
 	Statement stmt1 = c.createStatement();
 	String sql1 = "DROP TABLE food";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableS() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE salt";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableM() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE medication";
 	stmt1.executeUpdate(sql1);
 	stmt1.close();	
 }
@@ -235,5 +281,16 @@ public void updateFood(int id,int calories) throws SQLException{
 	prep.setInt(2, id);
 	prep.executeUpdate();
 }
+public void updateSalt(int id,int min,int max) throws SQLException{
+	String sql = "UPDATE salt SET min=? WHERE id=?";
+	String sql1 = "UPDATE salt SET max=? WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	PreparedStatement prep1 = c.prepareStatement(sql1	);
+	prep.setInt(1, min);
+	prep.setInt(2, max);
+	prep.setInt(3, id);
+	prep.executeUpdate();
+}
+
 }
 
