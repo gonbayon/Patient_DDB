@@ -3,21 +3,21 @@ import java.io.Serializable;
 enum Amount{LOW,MEDIUM,HIGH};
 public class Salt implements Serializable{
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6218864119162462192L;
-	private int id,min,max;
+	private static final long serialVersionUID = -21877968393831801L;
+	private int id;
+	private float min,max;
 	private Amount ammo;
-	private Food food;
 	
 	public Salt(){
 		
 	}
-	public Salt(int min,int max,Food f){
+	public Salt(float min,float max){
 		this.min=min;
 		this.max=max;
-		food=f;
 		if(min==0 && max==0){
 			ammo=null;
 		}
@@ -55,16 +55,16 @@ public class Salt implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getMin() {
+	public float getMin() {
 		return min;
 	}
-	public void setMin(int min) {
+	public void setMin(float min) {
 		this.min = min;
 	}
-	public int getMax() {
+	public float getMax() {
 		return max;
 	}
-	public void setMax(int max) {
+	public void setMax(float max) {
 		this.max = max;
 	}
 	public Amount getAmmo() {
@@ -73,11 +73,7 @@ public class Salt implements Serializable{
 	public void setAmmo(Amount ammo) {
 		this.ammo = ammo;
 	}
-	public Food getFood() {
-		return food;
+	public String toString(){
+		return "\nId: "+id+"\nAmmount: "+ammo+"\nMin: "+min+"\nMax: "+max;
 	}
-	public void setFood(Food food) {
-		this.food = food;
-	}
-	
 }

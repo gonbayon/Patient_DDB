@@ -7,16 +7,18 @@ public class Food implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8362415943302623731L;
-	private int id,calories;
+	private static final long serialVersionUID = 1477367006635945074L;
+	private int id;
+	private float calories;
 	private String name;
 	private List <Patient> patient;
 	private List <Chronic> rej;
 	private Salt salt;
 	
 	
-	public Food(){
-		
+	public Food(String _name,float _calories){
+		name=_name;
+		calories=_calories;
 	}
 	public Food(String _name,int _calories
 			,List <Patient> _l,List <Chronic> _l1,Salt _salt){
@@ -32,10 +34,10 @@ public class Food implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCalories() {
+	public float getCalories() {
 		return calories;
 	}
-	public void setCalories(int calories) {
+	public void setCalories(float calories) {
 		this.calories = calories;
 	}
 	public String getName() {
@@ -81,6 +83,9 @@ public class Food implements Serializable{
 		if (id != other.id)
 			return false;
 		return true;
+	}
+	public String toString(){
+		return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\nSalt: "+getSalt();
 	}
 	
 }
