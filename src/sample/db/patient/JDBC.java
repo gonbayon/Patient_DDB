@@ -61,7 +61,7 @@ public void createTableMedic() throws SQLException{
 	String sql="CREATE TABLE medication"
 			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ "name	TEXT NULL, "
-			+ "agent TEXT NULL, ";
+			+ "agent TEXT NULL )";
 	s.executeUpdate(sql);
 	s.close();
 }
@@ -88,6 +88,15 @@ public void insertFood(Food food) throws SQLException{
 	PreparedStatement prep = c.prepareStatement(sql);
 	prep.setString(1, food.getName());
 	prep.setFloat(2, food.getCalories());
+	prep.executeUpdate();
+	prep.close();
+}
+public void insertMed(Medication med) throws SQLException{
+	String sql = "INSERT INTO medication (name, agent) "
+			+ "VALUES (?,?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, med.getName());
+	prep.setString(2, med.getAgent());
 	prep.executeUpdate();
 	prep.close();
 }
@@ -266,6 +275,23 @@ public Food searchFood(int id) throws SQLException{
 	rs.close();
 	prep.close();
 	return food;
+}
+public Medication searchMed(int id) throws SQLException{
+	Medication med=null;
+	String sql = "SELECT * FROM medication WHERE id = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int _id = rs.getInt("id");
+		String agent= rs.getString("agent");
+		String name = rs.getString("name");
+		med = new Medication( name, agent);
+		med.setId(id);
+}
+	rs.close();
+	prep.close();
+	return med;
 }
 public void updatePatient(int id,int room) throws SQLException{
 	String sql = "UPDATE patient SET room_n=? WHERE id=?";
