@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import sample.db.patient.JDBC;
 import sample.db.pojos.*;
 
-public class MenuMedic{
+
+public class MenuSche {
 	public void menu() throws IOException {
         System.out.println(""
             + "1. Connect \n"
@@ -23,7 +24,7 @@ public class MenuMedic{
     }
 	public static void main(String[] args) throws IOException, SQLException {
 		Menu menu=new Menu();
-		Medication m=null;
+		Schedule s=null;
 		JDBC j=null;
         BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
         int opcion =0;
@@ -38,7 +39,7 @@ public class MenuMedic{
                 break;
             case 2:
             	try{
-                j.createTableMedic();
+                j.createTableVisit();
             	}catch(NullPointerException np){
             		System.out.println("You first need to connect to a DDB");
             	}
@@ -46,13 +47,15 @@ public class MenuMedic{
             case 3:
             	try{
             		try{
-            			String name,agent;
-            			System.out.println("Medication name:");
-            			name=consola.readLine();
-            			System.out.println("Agent name:");
-            			agent=consola.readLine();
-            			m=new Medication(name, agent);
-            			j.insertMed(m);
+            			String start,end,day;
+            			System.out.println("Start:");
+            			start=consola.readLine();
+            			System.out.println("End:");
+            			end=consola.readLine();
+            			System.out.println("Day:");
+            			day=consola.readLine();
+            			s=new Schedule(start,end,day);
+            			j.insertSche(s);
             		}catch(SQLException sq){
             			System.out.println("You first need to create a table");
             			sq.printStackTrace();
@@ -64,7 +67,7 @@ public class MenuMedic{
             case 4:
             	//try{
             		//try{
-            			System.out.println(j.selectM());
+            			System.out.println(j.selectSh());
             			/*System.out.println(j.selectS());
             			System.out.println("Connect food and salt, enter food id and salt id");
             			int n=Integer.parseInt(consola.readLine());
@@ -87,9 +90,9 @@ public class MenuMedic{
             			System.out.println("Enters the id from the patient you want to delete: ");
             	int id=Integer.parseInt(consola.readLine());
             	j.deletePatient(id);*/
-            			System.out.println("Enters the id from the medication you want to delete: ");
+            			System.out.println("Enters the id from the schedule you want to delete: ");
             			int id=Integer.parseInt(consola.readLine());
-            			j.deleteMedicat(id);
+            			j.deleteSchedule(id);
             		}catch(SQLException sq){
             			System.out.println("You first need to create a table");
             		}
@@ -104,10 +107,10 @@ public class MenuMedic{
             			int n=Integer.parseInt(consola.readLine());
             			Patient p1=j.searchPatient(n);
             			System.out.println(p1);*/
-            			System.out.println("Enter the medication id to be shown");
+            			System.out.println("Enter the Schedule id to be shown");
             			int n=Integer.parseInt(consola.readLine());
-            			Medication med=j.searchMed(n);
-            			System.out.println(med);
+            			Schedule sc=j.searchSche(n);
+            			System.out.println(sc);
             		}catch(SQLException sq){
             			System.out.println("You first need to create a table");
             		}
@@ -116,13 +119,34 @@ public class MenuMedic{
             	}
             	break;
             case 7:
-            			System.out.println("You can not change anything about it, sorry");
+            	try{
+            		try{
+            			/*System.out.println("Enter the id of the patient to be changed of room");
+            			int id=Integer.parseInt(consola.readLine());
+            			System.out.println("Enter its new room number");
+            			int room=Integer.parseInt(consola.readLine());
+            			j.updatePatient(id, room);*/
+            			System.out.println("Enter the id of the schedule to be changed");
+            			int id=Integer.parseInt(consola.readLine());
+            			System.out.println("Enter its new start");
+            			String start=consola.readLine();
+            			System.out.println("Enter its new end");
+            			String end=consola.readLine();
+            			System.out.println("Enter its new day");
+            			String day=consola.readLine();
+            			j.updateSchedule(start,end,day,id);
+            		}catch(SQLException sq){
+            			System.out.println("You first need to create a table");
+            		}
+            	}catch(NullPointerException np){
+            		System.out.println("You first need to connect to a DDB");
+            	}
             	break;
             case 8:
             	try{
             		try{
             			//j.dropTableP();
-            			j.dropTableM();
+            			j.dropTableSh();
             		}catch(SQLException sq){
             			System.out.println("You first need to create a table");
             		}
@@ -144,4 +168,3 @@ public class MenuMedic{
 }while(true);
 	}
 }
-

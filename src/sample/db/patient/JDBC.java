@@ -65,6 +65,40 @@ public void createTableMedic() throws SQLException{
 	s.executeUpdate(sql);
 	s.close();
 }
+public void createTableVisit() throws SQLException{
+	Statement s=c.createStatement();
+	String sql="CREATE TABLE visitor"
+			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "name	TEXT NULL)";
+	s.executeUpdate(sql);
+	s.close();
+}
+public void createTableIll() throws SQLException{
+	Statement s=c.createStatement();
+	String sql="CREATE TABLE illness"
+			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "name	TEXT NULL)";
+	s.executeUpdate(sql);
+	s.close();
+}
+public void createTableChronic() throws SQLException{
+	Statement s=c.createStatement();
+	String sql="CREATE TABLE chronic"
+			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "name	TEXT NULL)";
+	s.executeUpdate(sql);
+	s.close();
+}
+public void createTableSchedule() throws SQLException{
+	Statement s=c.createStatement();
+	String sql="CREATE TABLE Schedule"
+			+ "(id	INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ "start TEXT NULL,"
+			+ "end TEXT NULL,"
+			+ "day TEXT NULL)";
+	s.executeUpdate(sql);
+	s.close();
+}
 public void assignSaltFood(int f,int s) throws SQLException{
 	String sql="UPDATE food SET id_salt=? WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
@@ -91,12 +125,46 @@ public void insertFood(Food food) throws SQLException{
 	prep.executeUpdate();
 	prep.close();
 }
+public void insertSche(Schedule sche) throws SQLException{
+	String sql = "INSERT INTO schedule (start, end, day) "
+			+ "VALUES (?,?,?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, sche.getStart());
+	prep.setString(2, sche.getEnd());
+	prep.setString(3, sche.getDay());
+	prep.executeUpdate();
+	prep.close();
+}
 public void insertMed(Medication med) throws SQLException{
 	String sql = "INSERT INTO medication (name, agent) "
 			+ "VALUES (?,?);";
 	PreparedStatement prep = c.prepareStatement(sql);
 	prep.setString(1, med.getName());
 	prep.setString(2, med.getAgent());
+	prep.executeUpdate();
+	prep.close();
+}
+public void insertVis(Visitor vis) throws SQLException{
+	String sql = "INSERT INTO visitor (name) "
+			+ "VALUES (?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, vis.getName());
+	prep.executeUpdate();
+	prep.close();
+}
+public void insertIll(Illness ill) throws SQLException{
+	String sql = "INSERT INTO illness (name) "
+			+ "VALUES (?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, ill.getName());
+	prep.executeUpdate();
+	prep.close();
+}
+public void insertChronic(Chronic ch) throws SQLException{
+	String sql = "INSERT INTO illness (name) "
+			+ "VALUES (?);";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setString(1, ch.getName());
 	prep.executeUpdate();
 	prep.close();
 }
@@ -126,6 +194,34 @@ public void deleteFood(int id) throws SQLException{
 public void deleteMedicat(int id) throws SQLException{
 	Statement stmt = c.createStatement();
 	String sql = "DELETE FROM medication WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1,id);
+	prep.executeUpdate();
+}
+public void deleteSchedule(int id) throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "DELETE FROM schedule WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1,id);
+	prep.executeUpdate();
+}
+public void deleteVisitor(int id) throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "DELETE FROM visitor WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1,id);
+	prep.executeUpdate();
+}
+public void deleteIllness(int id) throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "DELETE FROM illness WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1,id);
+	prep.executeUpdate();
+}
+public void deleteChronic(int id) throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "DELETE FROM chronic WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
 	prep.setInt(1,id);
 	prep.executeUpdate();
@@ -200,6 +296,72 @@ public List<Medication> selectM() throws SQLException{
 	stmt.close();
 	return show;
 }
+public List<Visitor> selectV() throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "SELECT * FROM visitor";
+	ResultSet rs = stmt.executeQuery(sql);
+	List<Visitor>show=new LinkedList();
+	while (rs.next()) {
+		int id=rs.getInt("id");
+		String name = rs.getString("name");
+		Visitor v = new Visitor(name);
+		v.setId(id);
+		show.add(v);
+	}
+	rs.close();
+	stmt.close();
+	return show;
+}
+public List<Schedule> selectSh() throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "SELECT * FROM schedule";
+	ResultSet rs = stmt.executeQuery(sql);
+	List<Schedule>show=new LinkedList();
+	while (rs.next()) {
+		int id=rs.getInt("id");
+		String start = rs.getString("start");
+		String end = rs.getString("end");
+		String day = rs.getString("day");
+		Schedule s = new Schedule(start, end, day);
+		s.setId(id);
+		show.add(s);
+	}
+	rs.close();
+	stmt.close();
+	return show;
+}
+public List<Illness> selectI() throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "SELECT * FROM illness";
+	ResultSet rs = stmt.executeQuery(sql);
+	List<Illness>show=new LinkedList();
+	while (rs.next()) {
+		int id=rs.getInt("id");
+		String name = rs.getString("name");
+		Illness i= new Illness(name);
+		i.setId(id);
+		show.add(i);
+	}
+	rs.close();
+	stmt.close();
+	return show;
+}
+public List<Chronic> selectC() throws SQLException{
+	Statement stmt = c.createStatement();
+	String sql = "SELECT * FROM chronic";
+	ResultSet rs = stmt.executeQuery(sql);
+	List<Chronic>show=new LinkedList();
+	while (rs.next()) {
+		int id=rs.getInt("id");
+		String name = rs.getString("name");
+		Chronic i= new Chronic(name);
+		i.setId(id);
+		show.add(i);
+	}
+	rs.close();
+	stmt.close();
+	return show;
+}
 public List <Salt> selectS() throws SQLException{
 	Statement stmt = c.createStatement();
 	String sql = "SELECT * FROM salt";
@@ -238,6 +400,30 @@ public void dropTableS() throws SQLException{
 public void dropTableM() throws SQLException{
 	Statement stmt1 = c.createStatement();
 	String sql1 = "DROP TABLE medication";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableV() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE visitor";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableI() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE illness";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableC() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE chronic";
+	stmt1.executeUpdate(sql1);
+	stmt1.close();	
+}
+public void dropTableSh() throws SQLException{
+	Statement stmt1 = c.createStatement();
+	String sql1 = "DROP TABLE schedule";
 	stmt1.executeUpdate(sql1);
 	stmt1.close();	
 }
@@ -293,6 +479,72 @@ public Medication searchMed(int id) throws SQLException{
 	prep.close();
 	return med;
 }
+public Schedule searchSche(int id) throws SQLException{
+	Schedule s=null;
+	String sql = "SELECT * FROM schedule WHERE id = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int _id = rs.getInt("id");
+		String start= rs.getString("start");
+		String end = rs.getString("end");
+		String day = rs.getString("day");
+		s = new Schedule( start,end,day);
+		s.setId(id);
+}
+	rs.close();
+	prep.close();
+	return s;
+}
+public Visitor searchVis(int id) throws SQLException{
+	Visitor vis=null;
+	String sql = "SELECT * FROM visitor WHERE id = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int _id = rs.getInt("id");
+		String name = rs.getString("name");
+		vis = new Visitor( name);
+		vis.setId(id);
+}
+	rs.close();
+	prep.close();
+	return vis;
+}
+public Illness searchIll(int id) throws SQLException{
+	Illness ill=null;
+	String sql = "SELECT * FROM illness WHERE id = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int _id = rs.getInt("id");
+		String name = rs.getString("name");
+		ill = new Illness(name);
+		ill.setId(id);
+}
+	rs.close();
+	prep.close();
+	return ill;
+}
+public Chronic searchChro(int id) throws SQLException{
+	Chronic ch=null;
+	String sql = "SELECT * FROM illness WHERE id = ?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	prep.setInt(1, id);
+	ResultSet rs = prep.executeQuery();
+	while (rs.next()) {
+		int _id = rs.getInt("id");
+		String name = rs.getString("name");
+		ch = new Chronic(name);
+		ch.setId(id);
+}
+	rs.close();
+	prep.close();
+	return ch;
+}
 public void updatePatient(int id,int room) throws SQLException{
 	String sql = "UPDATE patient SET room_n=? WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
@@ -317,6 +569,18 @@ public void updateSalt(int id,int min,int max) throws SQLException{
 	prep.setInt(3, id);
 	prep.executeUpdate();
 }
-
+public void updateSchedule(String start, String end, String day, int id) throws SQLException{
+	String sql = "UPDATE schedule SET start=? WHERE id=?";
+	String sql1 = "UPDATE schedule SET end=? WHERE id=?";
+	String sql2= "UPDATE schedule SET day=? WHERE id=?";
+	PreparedStatement prep = c.prepareStatement(sql);
+	PreparedStatement prep1 = c.prepareStatement(sql1);
+	PreparedStatement prep2 = c.prepareStatement(sql2);
+	prep.setString(1, start);
+	prep.setString(2, end);
+	prep.setString(3, day);
+	prep.setInt(4, id);
+	prep.executeUpdate();
+}
 }
 
