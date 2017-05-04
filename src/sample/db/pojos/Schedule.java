@@ -10,14 +10,16 @@ public class Schedule implements Serializable{
 	private static final long serialVersionUID = 6786141699312365779L;
 	private int id;
 	private String start,end;
-	private Week day;
+	private String day;
 	private List <Doctor> doc;
 	private List <Visitor> vis;
 	
-	public Schedule(){
-		
+	public Schedule(String _start,String _end, String _day){
+		start=_start;
+		end=_end;
+		day=_day;
 	}
-	public Schedule(String _start,String _end, Week _day
+	public Schedule(String _start,String _end, String _day
 			,List <Doctor> d,List <Visitor> v){
 		start=_start;
 		end=_end;
@@ -63,10 +65,10 @@ public class Schedule implements Serializable{
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public Week getDay() {
+	public String getDay() {
 		return day;
 	}
-	public void setDay(Week day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
 	public List<Doctor> getDoc() {

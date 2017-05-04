@@ -85,7 +85,11 @@ public class Food implements Serializable{
 		return true;
 	}
 	public String toString(){
-		return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\nSalt: "+getSalt();
+		if(salt==null){
+			return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\n";
+	
+		}
+		else return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\nAmount of Salt: "+getSalt().getAmmo()+"\n";
 	}
 	
 }

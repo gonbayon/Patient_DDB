@@ -13,9 +13,9 @@ public class Visitor implements Serializable {
 	private Patient patient;
 	private List <Schedule> sche;
 	
-	public Visitor (){
-		
-	}
+	public Visitor (String _n){
+		 		name=_n;
+		  	}
 	public Visitor(String _name, Patient p, List <Schedule> s){
 		name=_name;
 		patient=p;

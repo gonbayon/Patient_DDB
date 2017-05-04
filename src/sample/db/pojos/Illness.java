@@ -12,9 +12,9 @@ public class Illness implements Serializable{
 	private List <Patient> patient;
 	private List <Medication> treats;
 	
-	public Illness(){
-		
-	}
+	public Illness(String n){
+		 		name=n;
+		  	}
 	public Illness(String name,List <Patient>p,List <Medication>m){
 		this.name=name;
 		patient=p;

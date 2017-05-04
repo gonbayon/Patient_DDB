@@ -23,7 +23,6 @@ public class Patient implements Serializable {
 		name=_name;
 		surname=_surname;
 		room_n=n;
-		
 	}
 	public Patient(String _name,String _surname,int room
 			,Doctor _doctor, List <Doctor> _look
@@ -128,6 +127,9 @@ public class Patient implements Serializable {
 		this.med = med;
 	}
 	public String toString(){
-		return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
+		if( food==null){
+			return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
+		}
+		else return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\nFood: "+getFood();
 	}
 }

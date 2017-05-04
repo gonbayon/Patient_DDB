@@ -14,6 +14,9 @@ public class Chronic implements Serializable {
 	private List <Medication> rej_med;
 	public Chronic(){
 	}
+	public Chronic(String n){
+		 		name=n;
+		  	}
 	public Chronic(String _name,List <Patient> _patient,
 			List <Food> _rejects,List <Medication> _rej){
 		name=_name;
