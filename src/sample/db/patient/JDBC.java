@@ -13,6 +13,7 @@ Connection c;
 public JDBC(String n){
 	name=n;
 }
+
 public void connect(){
 	try {
 		Class.forName("org.sqlite.JDBC");
