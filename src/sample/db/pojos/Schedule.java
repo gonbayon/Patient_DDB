@@ -1,7 +1,6 @@
 package sample.db.pojos;
 import java.io.Serializable;
 import java.util.List;
-enum Week{MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY};
 public class Schedule implements Serializable{
 
 	/**
@@ -14,9 +13,15 @@ public class Schedule implements Serializable{
 	private List <Doctor> doc;
 	private List <Visitor> vis;
 	
+<<<<<<< HEAD
 	public Schedule(String _start,String _end, String _day){
 		start=_start;
 		end=_end;
+=======
+	public Schedule(String s, String e, String _day){
+		start=s;
+		end=e;
+>>>>>>> branch 'master' of https://github.com/gonbayon/Patient_DDB.git
 		day=_day;
 	}
 	public Schedule(String _start,String _end, String _day

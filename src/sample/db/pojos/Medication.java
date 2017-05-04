@@ -87,5 +87,9 @@ public class Medication implements Serializable {
 	public void setRejects(List<Chronic> rejects) {
 		this.rejects = rejects;
 	}
+	@Override
+	public String toString() {
+		return "Medication [id=" + id + ", name=" + name + ", agent=" + agent + "]";
+	}
 	
 }

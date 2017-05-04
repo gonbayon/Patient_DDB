@@ -14,8 +14,13 @@ public class Visitor implements Serializable {
 	private List <Schedule> sche;
 	
 	public Visitor (String _n){
+<<<<<<< HEAD
 		 		name=_n;
 		  	}
+=======
+		name=_n;
+	}
+>>>>>>> branch 'master' of https://github.com/gonbayon/Patient_DDB.git
 	public Visitor(String _name, Patient p, List <Schedule> s){
 		name=_name;
 		patient=p;
