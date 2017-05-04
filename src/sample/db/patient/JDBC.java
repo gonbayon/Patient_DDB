@@ -560,22 +560,16 @@ public void updateFood(int id,int calories) throws SQLException{
 	prep.executeUpdate();
 }
 public void updateSalt(int id,int min,int max) throws SQLException{
-	String sql = "UPDATE salt SET min=? WHERE id=?";
-	String sql1 = "UPDATE salt SET max=? WHERE id=?";
+	String sql = "UPDATE salt SET min=?, max=? WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
-	PreparedStatement prep1 = c.prepareStatement(sql1	);
 	prep.setInt(1, min);
 	prep.setInt(2, max);
 	prep.setInt(3, id);
 	prep.executeUpdate();
 }
 public void updateSchedule(String start, String end, String day, int id) throws SQLException{
-	String sql = "UPDATE schedule SET start=? WHERE id=?";
-	String sql1 = "UPDATE schedule SET end=? WHERE id=?";
-	String sql2= "UPDATE schedule SET day=? WHERE id=?";
+	String sql = "UPDATE schedule SET start=?, end=?, day=? WHERE id=?";
 	PreparedStatement prep = c.prepareStatement(sql);
-	PreparedStatement prep1 = c.prepareStatement(sql1);
-	PreparedStatement prep2 = c.prepareStatement(sql2);
 	prep.setString(1, start);
 	prep.setString(2, end);
 	prep.setString(3, day);
