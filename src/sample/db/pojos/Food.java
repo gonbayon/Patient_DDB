@@ -89,7 +89,8 @@ public class Food implements Serializable{
 			return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\n";
 	
 		}
-		else return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\nAmount of Salt: "+getSalt().getAmmo()+"\n";
+		else return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories()+", Amount of Salt: "+getSalt().getAmmo()+"\n";
 	}
+	
 	
 }

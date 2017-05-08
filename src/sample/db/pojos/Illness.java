@@ -13,13 +13,9 @@ public class Illness implements Serializable{
 	private List <Medication> treats;
 	
 	public Illness(String n){
-<<<<<<< HEAD
-		 		name=n;
-		  	}
-=======
+
 		name=n;
 	}
->>>>>>> branch 'master' of https://github.com/gonbayon/Patient_DDB.git
 	public Illness(String name,List <Patient>p,List <Medication>m){
 		this.name=name;
 		patient=p;

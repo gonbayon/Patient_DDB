@@ -1,6 +1,9 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import sample.db.*;
 
 public class Patient implements Serializable {
 	/**
@@ -18,11 +21,19 @@ public class Patient implements Serializable {
 	private List <Visitor> visitor;
 	
 	public Patient(){
+		lookedafter=new LinkedList<>();
+		med=new LinkedList<>();
+		food=new LinkedList<>();
+		visitor=new LinkedList<>();
 	}
 	public Patient (String _name, String _surname, int n){
 		name=_name;
 		surname=_surname;
 		room_n=n;
+		lookedafter=new LinkedList<>();
+		med=new LinkedList<>();
+		food=new LinkedList<>();
+		visitor=new LinkedList<>();
 	}
 	public Patient(String _name,String _surname,int room
 			,Doctor _doctor, List <Doctor> _look
@@ -105,6 +116,21 @@ public class Patient implements Serializable {
 	public List<Food> getFood() {
 		return food;
 	}
+	public String getFoodName(){
+		try{
+			Food f=null;
+			String s=" ";
+			String[] array=new String [food.size()];
+			for(int i=0;i<food.size();i++){
+				f=food.get(i);
+				s=f.getName();
+				array[i]=s;
+			}
+			return Arrays.toString(array);
+		}catch(ArrayIndexOutOfBoundsException Ai){
+			return "";
+		}
+	}
 	public void setFood(List<Food> food) {
 		this.food = food;
 	}
@@ -123,13 +149,30 @@ public class Patient implements Serializable {
 	public List<Medication> getMed() {
 		return med;
 	}
+	public String getMedName(){
+		try{
+			Medication m=null;
+			String s=" ";
+			String s1=" ";
+			String[] array=new String[med.size()];
+			for(int i=0;i<med.size();i++){
+				m=med.get(i);
+				array[i]=m.getName();
+			}
+			return Arrays.toString(array);
+		}catch(ArrayIndexOutOfBoundsException Ai){
+			return "";
+		}
+	}
 	public void setMed(List<Medication> med) {
 		this.med = med;
 	}
 	public String toString(){
-		if( food==null){
-			return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
+		if( food.size()<1 && med.size()<1){
+			return "	Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
 		}
-		else return "Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\nFood: "+getFood();
+		else
+			return "	Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\nFood: "+getFoodName()+"\nMedication: "+getMedName()+"\n";
 	}
+
 }

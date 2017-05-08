@@ -23,7 +23,7 @@ public class MenuVisit {
             + "Introduzca una opcion:");
     }
 	public static void main(String[] args) throws IOException, SQLException {
-		Menu menu=new Menu();
+		Menu_Trys menu=new Menu_Trys();
 		Visitor v=null;
 		JDBC j=null;
         BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));

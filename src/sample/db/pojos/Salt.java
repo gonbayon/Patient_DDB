@@ -74,6 +74,6 @@ public class Salt implements Serializable{
 		this.ammo = ammo;
 	}
 	public String toString(){
-		return "\nId: "+id+"\nAmmount: "+ammo+"\nMin: "+min+"\nMax: "+max;
+		return "\nId: "+id+", Ammount: "+ammo+", Min: "+min+", Max: "+max;
 	}
 }
