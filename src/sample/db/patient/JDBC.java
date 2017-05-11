@@ -147,6 +147,10 @@ public void assignSaltFood(int f,int s) throws SQLException{
 	prep.setInt(2, f);
 	prep.executeUpdate();
 }
+
+	public void insertDoctor(Doctor doc){
+		
+	}
 public void assignPatientFood(int pat,int food,String when) throws SQLException{
 	String sql = "INSERT INTO p_food (id_pat, id_food ,date) "
 			+ "VALUES (?,?,?);";
