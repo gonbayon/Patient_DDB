@@ -25,12 +25,16 @@ public class Patient implements Serializable {
 	joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
     inverseJoinColumns={@JoinColumn(name="doctor_id", referencedColumnName="id")})
 	private List <Doctor> lookedafter;
+
 	
 	
 	@ManyToMany
 	@JoinTable(name="food-patient",
 	joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
     inverseJoinColumns={@JoinColumn(name="food_id", referencedColumnName="id")})
+
+
+
 	private List <Food> food;
 	
 	@ManyToMany(mappedBy="patient")
@@ -60,23 +64,28 @@ public class Patient implements Serializable {
 	
 
 	public Patient(){
+
 		lookedafter=new LinkedList<Doctor>();
 		med=new LinkedList<Medication>();
 		food=new LinkedList<Food>();
 		visitor=new LinkedList<Visitor>();
+
+		lookedafter=new LinkedList<>();
+		food=new LinkedList<>();
+		visitor=new LinkedList<>();
+
 	}
 	public Patient (String _name, String _surname, int n){
 		name=_name;
 		surname=_surname;
 		room_n=n;
 		lookedafter=new LinkedList<>();
-		med=new LinkedList<>();
 		food=new LinkedList<>();
 		visitor=new LinkedList<>();
 	}
 	public Patient(String _name,String _surname,int room
 			,Doctor _doctor, List <Doctor> _look
-			,Illness _illness,List <Medication> _med,
+			,Illness _illness,
 			Chronic _chronic,List <Food> _food,List <Visitor> _visitor){
 		name=_name;
 		surname=_surname;
@@ -84,7 +93,6 @@ public class Patient implements Serializable {
 		In_charge=_doctor;
 		lookedafter=_look;
 		illness=_illness;
-		med=_med;
 		chronic=_chronic;
 		food=_food;
 		visitor=_visitor;
@@ -152,18 +160,27 @@ public class Patient implements Serializable {
 	public void setChronic(Chronic chronic) {
 		this.chronic = chronic;
 	}
+	public String showChronic(){
+		if(chronic!=null){
+			return "Name: "+chronic.getName()+" ,Medicines: "+chronic.getMedName();
+
+		}
+		else
+			return "";
+	}
 	public List<Food> getFood() {
 		return food;
 	}
 	public String getFoodName(){
 		try{
 			Food f=null;
-			String s=" ";
+			String s=" ",st="";
 			String[] array=new String [food.size()];
 			for(int i=0;i<food.size();i++){
 				f=food.get(i);
 				s=f.getName();
-				array[i]=s;
+				st=f.getDate();
+				array[i]=s+" "+st;
 			}
 			return Arrays.toString(array);
 		}catch(ArrayIndexOutOfBoundsException Ai){
@@ -179,39 +196,57 @@ public class Patient implements Serializable {
 	public void setVisitor(List<Visitor> visitor) {
 		this.visitor = visitor;
 	}
+	public String showVisitors(){
+		if(visitor.size()<1) return "";
+		else {
+			Visitor vis=null;
+			String s=" ",n="",sch;
+			List<Schedule> st=new LinkedList();
+			Schedule sche=null;
+			String[] array=new String [visitor.size()];
+			String[] ss=null;;
+			for(int i=0;i<visitor.size();i++){
+				vis=visitor.get(i);
+				n=vis.getName();
+				s=vis.getSurname();
+				st=vis.getSche();
+				if(st.size()>0){
+					ss=new String[st.size()];
+					for (int j = 0; j <st.size(); j++) {
+						ss[j]=st.get(j).getScheduleprettyly();
+					}
+					array[i]=n+" "+s+" "+Arrays.toString(ss);
+				}
+				else array[i]=n+" "+s;
+			}
+			return Arrays.toString(array);
+		}
+	}
+	public String showDoc(){
+		String s1=In_charge.getName();
+		String s2=In_charge.getSurname();
+		return s1+" "+s2;
+	}
 	public Illness getIllness() {
 		return illness;
 	}
 	public void setIllness(Illness illness) {
 		this.illness = illness;
 	}
-	public List<Medication> getMed() {
-		return med;
-	}
-	public String getMedName(){
-		try{
-			Medication m=null;
-			String s=" ";
-			String s1=" ";
-			String[] array=new String[med.size()];
-			for(int i=0;i<med.size();i++){
-				m=med.get(i);
-				array[i]=m.getName();
-			}
-			return Arrays.toString(array);
-		}catch(ArrayIndexOutOfBoundsException Ai){
-			return "";
-		}
-	}
-	public void setMed(List<Medication> med) {
-		this.med = med;
-	}
-	public String toString(){
-		if( food.size()<1 && med.size()<1){
-			return "	Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
+	public String showIllness(){
+		if(illness!=null){
+			return "Name: "+illness.getName()+" ,Medicines: "+illness.getMedName();
 		}
 		else
-			return "	Id:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\nFood: "+getFoodName()+"\nMedication: "+getMedName()+"\n";
+			return "";
+	}
+	public String toString(){
+		if( food.size()<1){
+			return "	\nId:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\n";
+		}
+		else
+			return "	\nId:"+id+"\nName: "+name+"\nSurname: "+surname+"\nRoom: "+room_n+"\nFood: "+getFoodName()+"\nIllness: "+showIllness()+""
+					+ "\nChronic illness: "+showChronic()+"\nVisitors: "+showVisitors()+"\nDoctor: "+showDoc();
 	}
 
 }

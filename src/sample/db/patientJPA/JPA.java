@@ -9,7 +9,7 @@ public class JPA {
 	public EntityManager em;	
 	
 	static void startMethod(){
-		EntityManager em = Persistence.createEntityManagerFactory("hospital-provider").createEntityManager();
+		EntityManager em = Persistence.createEntityManagerFactory("patient-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
@@ -65,7 +65,7 @@ public class JPA {
 			em.getTransaction().commit();
 		}
 		
-		//Esto no se si esta bien, le paso una id, y con el query busco el objeto y lo borra.
+		
 		public void deleteDoctor(int id){
 			
 			Query q1 =em.createNativeQuery("SELECT * FROM Doctor WHERE id LIKE ?", Doctor.class);
@@ -156,7 +156,7 @@ public class JPA {
 		
 		public Doctor getDoctorbyId(int id){
 					
-					Query q1 =em.createNativeQuery("SELECT * FROM Doctor WHERE id LIKE ?", Doctor.class);
+					Query q1 =em.createNativeQuery("SELECT * FROM Doctor WHERE id= ?", Doctor.class);
 					q1.setParameter(1, "%" + id + "%");
 					Doctor doctor = (Doctor) q1.getSingleResult();
 					return doctor;
@@ -165,7 +165,7 @@ public class JPA {
 		
 		public Patient getPatientbyId(int id){
 			
-			Query q1 =em.createNativeQuery("SELECT * FROM Patient WHERE id LIKE ?", Patient.class);
+			Query q1 =em.createNativeQuery("SELECT * FROM Patient WHERE id = ?", Patient.class);
 			q1.setParameter(1, "%" + id + "%");
 			Patient patient = (Patient) q1.getSingleResult();
 			return patient;
@@ -216,6 +216,12 @@ public class JPA {
 			List<Food> food = (List<Food>) q1.getResultList();
 			return food;
 
+		}
+		
+		public List<Patient> selectP() {
+			Query q1 = em.createNativeQuery("SELECT * FROM patient", Patient.class);
+			List<Patient> p = (List<Patient>) q1.getResultList();
+			return p;
 		}
 		
 		public List<Medication> selectM() {

@@ -1,7 +1,7 @@
 package sample.db.pojos;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +24,7 @@ public class Illness implements Serializable {
 	private Integer id;
 	private String name;
 
+
 	
 	@ManyToMany
 	@JoinTable(name="Ill-pat",
@@ -32,6 +33,7 @@ public class Illness implements Serializable {
 	private List <Patient> patient;
 	
 	@ManyToMany(mappedBy="illness")
+
 	private List <Medication> treats;
 	
 	public Illness() {
@@ -45,10 +47,10 @@ public class Illness implements Serializable {
 	public Illness(String n){
 
 		name=n;
+		treats=new LinkedList<>();
 	}
 	public Illness(String name,List <Patient>p,List <Medication>m){
 		this.name=name;
-		patient=p;
 		treats=m;
 	}
 	@Override
@@ -83,17 +85,35 @@ public class Illness implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<Patient> getPatient() {
-		return patient;
-	}
-	public void setPatient(List<Patient> patient) {
-		this.patient = patient;
-	}
 	public List<Medication> getTreats() {
 		return treats;
+	}
+	public String getMedName(){
+		try{
+			Medication m=null;
+			String s=" ";
+			String s1=" ";
+			String[] array=new String[treats.size()];
+			for(int i=0;i<treats.size();i++){
+				m=treats.get(i);
+				array[i]=m.getName();
+			}
+			return Arrays.toString(array);
+		}catch(ArrayIndexOutOfBoundsException Ai){
+			return "";
+		}
 	}
 	public void setTreats(List<Medication> treats) {
 		this.treats = treats;
 	}
+	@Override
+	public String toString() {
+		if(treats.size()<1 ){
+			return "\nId=" + id + ", name=" + name ;
+		}
+		else 
+			return "\nId=" + id + ", name=" + name +", treated by:" +getMedName() ;
+	}
+	
 	
 }

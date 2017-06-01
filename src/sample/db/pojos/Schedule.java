@@ -1,16 +1,8 @@
 package sample.db.pojos;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 @Entity
 @Table(name="schedule")
 public class Schedule implements Serializable {
@@ -43,6 +35,8 @@ public class Schedule implements Serializable {
 		start=s;
 		end=e;
 		day=_day;
+		doc=new LinkedList();
+		vis=new LinkedList();
 	}
 	public Schedule(String _start,String _end, String _day
 			,List <Doctor> d,List <Visitor> v){
@@ -107,6 +101,13 @@ public class Schedule implements Serializable {
 	}
 	public void setVis(List<Visitor> vis) {
 		this.vis = vis;
+	}
+	public String getScheduleprettyly(){
+		return "Start: "+getStart()+", End: "+getEnd()+", Day: "+getDay();
+	}
+	@Override
+	public String toString() {
+		return String.format("Id=%s, start=%s, end=%s, day=%s\n", id, start, end, day);
 	}
 	
 

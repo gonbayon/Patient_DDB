@@ -21,9 +21,10 @@ public class Food implements Serializable {
 	@Id
 	@GeneratedValue(generator="food")
 	@TableGenerator(name="food", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="food")
+	
 	private int id;
 	private float calories;
-	private String name;
+	private String name,date;
 	
 	@ManyToMany
 	@JoinTable(name="crhonic-food",
@@ -35,16 +36,18 @@ public class Food implements Serializable {
 	private List <Patient> patient;
 
 
-	/**
-	 * 
-	 */
-	
-	
 	public Food() {
 		super();
 		this.patient = new ArrayList<Patient>();
 		
 		}
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 	private Salt salt;
 	
@@ -119,10 +122,10 @@ public class Food implements Serializable {
 	}
 	public String toString(){
 		if(salt==null){
-			return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\n";
+			return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories();
 	
 		}
-		else return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories()+", Amount of Salt: "+getSalt().getAmmo()+"\n";
+		else return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories()+", Amount of Salt: "+getSalt().getAmmo();
 	}
 	
 	
