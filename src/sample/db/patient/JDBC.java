@@ -26,7 +26,6 @@ public class JDBC {
 	public void disconnect() throws SQLException {
 		c.close();
 	}
-
 	public void createTablePat() throws SQLException {
 		Statement stmt1 = c.createStatement();
 		String sql1 = "CREATE TABLE patient" + "(id       INTEGER  PRIMARY KEY AUTOINCREMENT ,"
