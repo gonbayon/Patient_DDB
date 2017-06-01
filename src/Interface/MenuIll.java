@@ -17,7 +17,7 @@ public class MenuIll {
             + "2. Show all illnesses\n"
             + "3. Delete an illness\n"
             + "4. Search for an illness\n"
-            + "5. Drop\n"
+            + "5. Insert the medication to overtake the illness\n"
             + "Introduce an option:");
     }
 	public void menuillness(JDBC j) throws IOException, SQLException {
@@ -44,13 +44,17 @@ public class MenuIll {
             	break;
             case 4:
             	System.out.println("Enter an Illness: ");
-            	try{
-            	i=j.searchIll(consola.readLine());
-            	}catch(NullPointerException np){
+            	String ill=consola.readLine();
+            	i=j.searchIll(ill);
+            	if(i!=null){
+            	System.out.println(i);
+            	}
+            	else{
             		System.out.println("That illness doesn´t appear in our database,"
             				+ " do you want to insert it? [yes/no]");
             		switch(consola.readLine().toLowerCase()){
             		case "yes":
+            			i=new Illness(ill);
             			j.insertIll(i);
             			break;
             		default:
@@ -59,8 +63,14 @@ public class MenuIll {
             	}
             	break;
             case 5:
-            	j.dropTableI();
-            	break;  
+            	System.out.println("Enter the illness id: ");
+            	System.out.println(j.selectI());
+            	System.out.println("Type it´s id: ");
+            	int num=Integer.parseInt(consola.readLine());
+            	System.out.println("Enter the medication name: ");
+            	j.assignIllnessMedication(num,consola.readLine());
+            	break;
+
         }
 	}
 }

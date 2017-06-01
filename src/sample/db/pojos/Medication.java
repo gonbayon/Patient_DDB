@@ -89,7 +89,7 @@ public class Medication implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "\nId=" + id + ", name=" + name + ", agent=" + agent+"\n" ;
+		return "\nId=" + id + ", name=" + name + ", agent=" + agent ;
 	}
 	
 }

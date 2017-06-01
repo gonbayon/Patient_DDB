@@ -1,5 +1,7 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 public class Chronic implements Serializable {
 
@@ -14,6 +16,9 @@ public class Chronic implements Serializable {
 	private List <Medication> rej_med;
 	public Chronic(String n){
 		name=n;
+		rej_med=new LinkedList();
+		patient=new LinkedList();
+		rejects=new LinkedList();
 	}
 
 	public Chronic(String _name,List <Patient> _patient,
@@ -72,6 +77,40 @@ public class Chronic implements Serializable {
 	}
 	public void setRej_med(List<Medication> rej_med) {
 		this.rej_med = rej_med;
+	}
+	public String getMedName(){
+		try{
+			Medication m=null;
+			String s=" ";
+			String s1=" ";
+			String[] array=new String[rej_med.size()];
+			for(int i=0;i<rej_med.size();i++){
+				m=rej_med.get(i);
+				array[i]=m.getName();
+			}
+			return Arrays.toString(array);
+		}catch(ArrayIndexOutOfBoundsException Ai){
+			return "";
+		}
+	}
+	public String getFoodName(){
+		try{
+			Food f=null;
+			String[] array=new String[rejects.size()];
+			for(int i=0;i<rejects.size();i++){
+				f=rejects.get(i);
+				array[i]=f.getName();
+			}
+			return Arrays.toString(array);
+		}catch(ArrayIndexOutOfBoundsException Ai){
+			return "";
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Id=%s, name=%s, food rejected=%s, med=%s", id, name,getFoodName(),
+				getMedName()+"\n");
 	}
 	
 	

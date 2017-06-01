@@ -10,7 +10,13 @@ public class Food implements Serializable{
 	private static final long serialVersionUID = 1477367006635945074L;
 	private int id;
 	private float calories;
-	private String name;
+	private String name,date;
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	private List <Patient> patient;
 	private List <Chronic> rej;
 	private Salt salt;
@@ -86,10 +92,10 @@ public class Food implements Serializable{
 	}
 	public String toString(){
 		if(salt==null){
-			return "Id: "+getId()+"\nName: "+getName()+"\nCalories: "+getCalories()+"\n";
+			return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories();
 	
 		}
-		else return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories()+", Amount of Salt: "+getSalt().getAmmo()+"\n";
+		else return "\nId: "+getId()+", Name: "+getName()+", Calories: "+getCalories()+", Amount of Salt: "+getSalt().getAmmo();
 	}
 	
 	

@@ -1,20 +1,30 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
+import javax.*;
 public class Doctor implements Serializable{
 
-	/**
-	 * 
-	 */
+	@Override
+	public String toString() {
+		return "Id=" + id + ", name=" + name + ", surname=" + surname + ", field=" + field + ", In_charge="
+				+ In_charge + ", schedule=" + schedule;
+	}
 	private static final long serialVersionUID = 2997573668541037570L;
+	
 	private int id;
 	private String name,surname,field;
 	private List <Patient> In_charge;
 	private List <Patient> Looking;
 	private List <Schedule> schedule;
 	
-	public Doctor(){
-		
+	public Doctor(String n,String s,String f){
+		name=n;
+		surname=s;
+		field=f;
+		In_charge=new LinkedList();
+		Looking=new LinkedList();
+		schedule=new LinkedList();
 	}
 	public Doctor(String _name,String _surname, String _field
 			,List <Patient>_list,List <Patient> _list1,
@@ -75,7 +85,6 @@ public class Doctor implements Serializable{
 	}
 	public void setIn_charge(List<Patient> in_charge) {
 		In_charge = in_charge;
-		//hola
 	}
 	public List<Patient> getLooking() {
 		return Looking;

@@ -9,12 +9,12 @@ public class Visitor implements Serializable {
 	 */
 	private static final long serialVersionUID = -7772062054424291787L;
 	private int id;
-	private String name;
+	private String name,surname;
 	private Patient patient;
 	private List <Schedule> sche;
 	
-	public Visitor (String _n){
-
+	public Visitor (String _n,String _s){
+		surname=_s;
 		name=_n;
 	}
 	public Visitor(String _name, Patient p, List <Schedule> s){
@@ -65,6 +65,17 @@ public class Visitor implements Serializable {
 	}
 	public void setSche(List<Schedule> sche) {
 		this.sche = sche;
+	}
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	@Override
+	public String toString() {
+		return "Visitor id=" + id + ", name=" + name + ", surname=" + surname + ", patient=" + patient + ", sche="
+				+ sche ;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 public class Schedule implements Serializable{
 
@@ -18,6 +19,8 @@ public class Schedule implements Serializable{
 		start=s;
 		end=e;
 		day=_day;
+		doc=new LinkedList();
+		vis=new LinkedList();
 	}
 	public Schedule(String _start,String _end, String _day
 			,List <Doctor> d,List <Visitor> v){
@@ -82,6 +85,13 @@ public class Schedule implements Serializable{
 	}
 	public void setVis(List<Visitor> vis) {
 		this.vis = vis;
+	}
+	public String getScheduleprettyly(){
+		return "Start: "+getStart()+", End: "+getEnd()+", Day: "+getDay();
+	}
+	@Override
+	public String toString() {
+		return String.format("Id=%s, start=%s, end=%s, day=%s\n", id, start, end, day);
 	}
 	
 
