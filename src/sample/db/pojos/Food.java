@@ -1,18 +1,51 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-public class Food implements Serializable{
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name="food")
+public class Food implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7487289227470517910L;
+	@Id
+	@GeneratedValue(generator="food")
+	@TableGenerator(name="food", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="food")
+	private int id;
+	private float calories;
+	private String name;
+	
+	@ManyToMany
+	@JoinTable(name="crhonic-food",
+	joinColumns={@JoinColumn(name="food_id", referencedColumnName="id")},
+    inverseJoinColumns={@JoinColumn(name="chronic_id", referencedColumnName="id")})
+	private List <Chronic> rej;
+	
+	@ManyToMany(mappedBy="food")
+	private List <Patient> patient;
 
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1477367006635945074L;
-	private int id;
-	private float calories;
-	private String name;
-	private List <Patient> patient;
-	private List <Chronic> rej;
+	
+	
+	public Food() {
+		super();
+		this.patient = new ArrayList<Patient>();
+		
+		}
+	
 	private Salt salt;
 	
 	

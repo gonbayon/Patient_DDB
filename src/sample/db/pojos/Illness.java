@@ -1,16 +1,46 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-public class Illness implements Serializable{
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name="illness")
+public class Illness implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7740673539295188042L;
-	private int id;
+	@Id
+	@GeneratedValue(generator="illness")
+	@TableGenerator(name="illness", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="illness")
+	private Integer id;
 	private String name;
+
+	
+	@ManyToMany
+	@JoinTable(name="Ill-pat",
+	joinColumns={@JoinColumn(name="illness_id", referencedColumnName="id")},
+    inverseJoinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")})
 	private List <Patient> patient;
+	
+	@ManyToMany(mappedBy="illness")
 	private List <Medication> treats;
+	
+	public Illness() {
+		super();
+		
+		this.treats = new ArrayList<Medication>();
+		this.patient = new ArrayList<Patient>();
+		
+	}
 	
 	public Illness(String n){
 

@@ -1,17 +1,50 @@
 package sample.db.pojos;
 import java.io.Serializable;
 import java.util.List;
-public class Chronic implements Serializable {
+import java.util.ArrayList;
+import javax.persistence.*;
 
+
+
+	@Entity
+	@Table(name="chronic")
+	public class Chronic implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7487289227470517910L;
+		@Id
+		@GeneratedValue(generator="chronic")
+		@TableGenerator(name="chronic", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="chronic")
+		private String type;
+		private String name;
+		private Integer id;
+
+		@ManyToMany
+		@JoinTable(name="med-chronic",
+		joinColumns={@JoinColumn(name="chronic_id", referencedColumnName="id")},
+	    inverseJoinColumns={@JoinColumn(name="medication_id", referencedColumnName="id")})
+		private List <Medication> rej_med;
+		@ManyToMany(mappedBy="chronic")
+		private List <Food> rejects;
+		@OneToMany(mappedBy="chronic")
+		private List <Patient> patient;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6110426865531354588L;
-	private int id;
-	private String name;
-	private List <Patient> patient;
-	private List <Food> rejects;
-	private List <Medication> rej_med;
+	/*private static final long serialVersionUID = -6110426865531354588L;
+	private id;*/
+	//private String name;
+	//private List <Patient> patient;
+	//private List <Food> rejects;
+	//private List <Medication> rej_med;
+	public Chronic() {
+		super();
+		this.patient = new ArrayList<Patient>();
+		this.rejects = new ArrayList<Food>();
+		this.rej_med = new ArrayList<Medication>();
+		}
+	
 	public Chronic(String n){
 		name=n;
 	}
@@ -72,8 +105,6 @@ public class Chronic implements Serializable {
 	}
 	public void setRej_med(List<Medication> rej_med) {
 		this.rej_med = rej_med;
-	}
-	
-	
-	
+	}	
 }
+

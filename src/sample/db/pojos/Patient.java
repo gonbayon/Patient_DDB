@@ -3,28 +3,67 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import sample.db.*;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name="patient")
 public class Patient implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3000387307546279723L;
+	private static final long serialVersionUID = -7487289227470517910L;
+	@Id
+	@GeneratedValue(generator="patient")
+	@TableGenerator(name="patient", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="patient")
 	private int id,room_n;
 	private String name,surname;
-	private Doctor In_charge;
+	
+	@ManyToMany
+	@JoinTable(name="doctor-patient",
+	joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
+    inverseJoinColumns={@JoinColumn(name="doctor_id", referencedColumnName="id")})
 	private List <Doctor> lookedafter;
-	private Illness illness;
-	private List <Medication> med;
-	private Chronic chronic;
+	
+	
+	@ManyToMany
+	@JoinTable(name="food-patient",
+	joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
+    inverseJoinColumns={@JoinColumn(name="food_id", referencedColumnName="id")})
 	private List <Food> food;
+	
+	@ManyToMany(mappedBy="patient")
+	private List <Medication> med;
+	
+	@Basic(fetch = FetchType.LAZY)
+	@Lob
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "chronic_id")
+	private Chronic chronic;
+	
+	//private byte[] photo;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doctor_id")
+	private Doctor In_charge;
+	
+	@OneToMany(mappedBy="patient")
 	private List <Visitor> visitor;
 	
+	@OneToOne (fetch=FetchType.LAZY, mappedBy="patient")
+	private Illness illness;
+	/**
+	 * 
+	 */
+	
+	
+
 	public Patient(){
-		lookedafter=new LinkedList<>();
-		med=new LinkedList<>();
-		food=new LinkedList<>();
-		visitor=new LinkedList<>();
+		lookedafter=new LinkedList<Doctor>();
+		med=new LinkedList<Medication>();
+		food=new LinkedList<Food>();
+		visitor=new LinkedList<Visitor>();
 	}
 	public Patient (String _name, String _surname, int n){
 		name=_name;

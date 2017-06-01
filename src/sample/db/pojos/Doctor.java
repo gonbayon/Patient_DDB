@@ -1,21 +1,59 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-public class Doctor implements Serializable{
 
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name="doctor")
+public class Doctor implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2997573668541037570L;
+	private static final long serialVersionUID = -7487289227470517910L;
+	@Id
+	@GeneratedValue(generator="doctor")
+	@TableGenerator(name="doctor", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="doctor")
 	private int id;
 	private String name,surname,field;
-	private List <Patient> In_charge;
-	private List <Patient> Looking;
+	
+	@ManyToMany
+	@JoinTable(name="schedule-doctor",
+	joinColumns={@JoinColumn(name="doctor_id", referencedColumnName="id")},
+    inverseJoinColumns={@JoinColumn(name="schedule_id", referencedColumnName="id")})
 	private List <Schedule> schedule;
 	
-	public Doctor(){
-		
-	}
+	@ManyToMany(mappedBy="doctor")
+	private List <Patient> Looking;
+	
+	@Basic(fetch = FetchType.LAZY)
+	@Lob
+
+	@OneToMany(mappedBy="doctor")
+	private List <Patient> In_charge;
+	/**
+	 * 
+	 */
+	
+
+	public Doctor() {
+		super();
+		this.Looking = new ArrayList<Patient>();
+		this.schedule = new ArrayList<Schedule>();
+		this.In_charge = new ArrayList<Patient>();
+		}
 	public Doctor(String _name,String _surname, String _field
 			,List <Patient>_list,List <Patient> _list1,
 			List <Schedule> _sch){

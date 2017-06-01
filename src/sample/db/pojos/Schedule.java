@@ -1,19 +1,44 @@
 package sample.db.pojos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-public class Schedule implements Serializable{
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name="schedule")
+public class Schedule implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6786141699312365779L;
+	private static final long serialVersionUID = -7487289227470517910L;
+	@Id
+	@GeneratedValue(generator="schedule")
+	@TableGenerator(name="schedule", table="sql_sequence", pkColumnName="name", valueColumnName="seq", pkColumnValue="schedule")
 	private int id;
 	private String start,end;
 	private String day;
-	private List <Doctor> doc;
-	private List <Visitor> vis;
 	
-
+	@ManyToMany(mappedBy="schedule")
+	private List <Doctor> doc;
+	
+	@ManyToMany(mappedBy="schedule")
+	private List <Visitor> vis;
+	/**
+	 * 
+	 */
+	public Schedule() {
+		super();
+		this.doc = new ArrayList<Doctor>();
+		this.vis = new ArrayList<Visitor>();
+		
+		}
 	public Schedule(String s, String e, String _day){
 		start=s;
 		end=e;
