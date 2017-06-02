@@ -4,10 +4,12 @@ import java.io.*;
 import java.sql.SQLException;
 
 import sample.db.patient.JDBC;
+import sample.db.patientJPA.JPA;
 import sample.db.pojos.*;
 
 
 public class MENU_Complete {
+
 	public void menu() throws IOException {
         System.out.println(""
             + "999. Connect \n"
@@ -28,6 +30,7 @@ public class MENU_Complete {
 		MenuChronic chr=null;
 		MenuPat mp=null;
 		JDBC j=null;
+		JPA jp=null;
 		MenuF fo=null;
 		MenuIll il=null;
 		MenuSche sche=null;
@@ -50,9 +53,18 @@ public class MENU_Complete {
         }while(cont>0);
         switch (option) {
 	        case 999:
-	        	System.out.println("Name of DDB to connect");
-	            j=new JDBC(consola.readLine());
+	        	
+	        	
+	            j=new JDBC();
+	            jp = new JPA();
 	            j.connect();
+	            
+	            /*Al crear el entit manager nos da error "No Persistence provider for EntityManager named hospital-provider"
+	              pero la persistance esta, asique no nos conecta*/
+	            
+	            
+	            //jp.startMethod();
+	            
 	            try{
 	            	j.createTableDoctor();
 	                j.createTablePat();

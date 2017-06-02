@@ -6,17 +6,18 @@ import java.util.*;
 import sample.db.pojos.*;
 
 public class JDBC {
-	String name;
+	//String name="pacientdb.db";
 	Connection c;
-
-	public JDBC(String n) {
-		name = n;
+	
+	
+	public JDBC() {
+		//name = n;
 	}
 
 	public void connect() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			c = DriverManager.getConnection("jdbc:sqlite:./db/" + name + ".db");
+			c = DriverManager.getConnection("jdbc:sqlite:./db/patientdb.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 		} catch (Exception e) {
 			e.printStackTrace();

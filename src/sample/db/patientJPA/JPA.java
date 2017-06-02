@@ -6,21 +6,40 @@ import javax.persistence.*;
 
 public class JPA {
 	
-	public EntityManager em;	
+	String name;
 	
-	static void startMethod(){
-		EntityManager em = Persistence.createEntityManagerFactory("patient-provider").createEntityManager();
+	public EntityManager em;	
+
+	public JPA(){
+		
+		
+	}
+	public String getName(){
+		
+		return name;
+	}
+	
+	//private static final String PERSISTENCE_PROVIDER = "patient-provider";
+	
+	public void startMethod(){
+		em = Persistence.createEntityManagerFactory("hospital-provider").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
 		
 		}
 	
-		public void insertDoctor(Doctor doctor){
+		public void insertDoc(Doctor doctor){
 			
-			
+			System.out.println(doctor);
+			Query q1 = em.createNativeQuery("INSERT INTO doctor (name,surname,field) " + "VALUES (?,?,?)",Doctor.class);
+			q1.setParameter(1, "%" + doctor.getName() + "%");
+			q1.setParameter(2, "%" + doctor.getSurname() + "%");
+			q1.setParameter(3, "%" + doctor.getField() + "%");
+			Doctor doc = (Doctor) q1.getSingleResult();
+			System.out.println(doc);
 			em.getTransaction().begin();
-			em.persist(doctor);
+			em.persist(doc);
 			em.getTransaction().commit();
 		}
 		public void insertPatient(Patient patient){
@@ -68,7 +87,7 @@ public class JPA {
 		
 		public void deleteDoctor(int id){
 			
-			Query q1 =em.createNativeQuery("SELECT * FROM Doctor WHERE id LIKE ?", Doctor.class);
+			Query q1 =em.createNativeQuery("SELECT * FROM doctor WHERE id LIKE ?", Doctor.class);
 			q1.setParameter(1, "%" + id + "%");
 			Doctor doctor = (Doctor) q1.getSingleResult();
 			em.getTransaction().begin();
@@ -76,10 +95,22 @@ public class JPA {
 			em.getTransaction().commit();
 			
 		}
-				
+		
+		public void deleteDoctor(String name, String surname)	{
+			
+			Query q1 =em.createNativeQuery("SELECT * FROM doctor WHERE name LIKE ? AND surname LIKE ?", Doctor.class);
+			q1.setParameter(1, "%" + name + "%");
+			q1.setParameter(2, "%" + surname + "%");
+			Doctor doc = (Doctor) q1.getSingleResult();
+			em.getTransaction().begin();
+			em.remove(doc);
+			em.getTransaction().commit();
+			
+		}
+		
 		public void deleteFood(int id){
 					
-					Query q1 =em.createNativeQuery("SELECT * FROM Food WHERE id LIKE ?", Food.class);
+					Query q1 =em.createNativeQuery("SELECT * FROM food WHERE id = ?", Food.class);
 					q1.setParameter(1, "%" + id + "%");
 					Food food = (Food) q1.getSingleResult();
 					em.getTransaction().begin();
@@ -90,7 +121,7 @@ public class JPA {
 		
 		public void deleteSalt(int id){
 			
-			Query q1 =em.createNativeQuery("SELECT * FROM Salt WHERE id LIKE ?", Salt.class);
+			Query q1 =em.createNativeQuery("SELECT * FROM salt WHERE id = ?", Salt.class);
 			q1.setParameter(1, "%" + id + "%");
 			Salt salt = (Salt) q1.getSingleResult();
 			em.getTransaction().begin();
@@ -156,7 +187,7 @@ public class JPA {
 		
 		public Doctor getDoctorbyId(int id){
 					
-					Query q1 =em.createNativeQuery("SELECT * FROM Doctor WHERE id= ?", Doctor.class);
+					Query q1 =em.createNativeQuery("SELECT * FROM doctor WHERE id= ?", Doctor.class);
 					q1.setParameter(1, "%" + id + "%");
 					Doctor doctor = (Doctor) q1.getSingleResult();
 					return doctor;
@@ -184,7 +215,7 @@ public class JPA {
 		
 		public Medication getMedbyId(int id){
 			
-			Query q1 =em.createNativeQuery("SELECT * FROM Medication WHERE id LIKE ?", Medication.class);
+			Query q1 =em.createNativeQuery("SELECT * FROM medication WHERE id LIKE ?", Medication.class);
 			q1.setParameter(1, "%" + id + "%");
 			Medication medication = (Medication) q1.getSingleResult();
 			return medication;
@@ -203,6 +234,7 @@ public class JPA {
 		}
 		
 		public List<Medication> getMedPatient(int id){
+
 					
 					Query q1 = em.createNativeQuery("SELECT * FROM p_medic WHERE id_pat LIKE ?", Medication.class);
 					q1.setParameter(1, "%" + id + "%");
@@ -210,6 +242,8 @@ public class JPA {
 					return patmedic;
 					
 				}
+		
+		
 		
 		public List<Food> selectF() {
 			Query q1 = em.createNativeQuery("SELECT * FROM Food", Food.class);
@@ -239,7 +273,7 @@ public class JPA {
 		}
 		
 		public List<Schedule> selectSh() {
-			Query q1 = em.createNativeQuery("SELECT * FROM Schedule", Schedule.class);
+			Query q1 = em.createNativeQuery("SELECT * FROM schedule", Schedule.class);
 			List<Schedule> s = (List<Schedule>) q1.getResultList();
 			return s;
 
@@ -252,7 +286,7 @@ public class JPA {
 
 		}
 		
-		List<Chronic> selectC() {
+		public List<Chronic> selectC() {
 			Query q1 = em.createNativeQuery("SELECT * Chronic Food",Chronic.class);
 			List<Chronic> c = (List<Chronic>) q1.getResultList();
 			return c;
@@ -260,11 +294,90 @@ public class JPA {
 		}
 		
 		public List<Doctor> selectD() {
-			Query q1 = em.createNativeQuery("SELECT * FROM Doctor", Doctor.class);
+
+			Query q1 = em.createNativeQuery("SELECT * FROM doctor", Doctor.class);
 			List<Doctor> d = (List<Doctor>) q1.getResultList();
 			return d;
 
 		}
+
+	
+		public List<Doctor> selectDbyfield(String f){
+					
+					Query q1 = em.createNativeQuery("SELECT * FROM doctor WHERE field LIKE ?", Doctor.class);
+					q1.setParameter(1, "%" + f + "%");
+					List<Doctor> docfield = (List<Doctor>) q1.getResultList();
+					return docfield;
+					
+				}
+		
+		public Patient searchPatient(int room){
+					
+					Query q1 =em.createNativeQuery("SELECT * FROM patient WHERE room LIKE ?",Patient.class);
+					q1.setParameter(1, "%" + room + "%");
+					Patient p = (Patient) q1.getSingleResult();
+					return p;
+					
+				}
+		public Food searchFood(int id){
+					
+					Query q1 =em.createNativeQuery("SELECT * FROM Food WHERE id LIKE ?",Food.class);
+					q1.setParameter(1, "%" + id + "%");
+					Food food = (Food) q1.getSingleResult();
+					return food;
+					
+				}
+		public Medication searchMed(String name){
+			
+			Query q1 =em.createNativeQuery("SELECT * FROM medication WHERE name LIKE ?",Medication.class);
+			q1.setParameter(1, "%" + name + "%");
+			Medication m = (Medication) q1.getSingleResult();
+			return m;
+			
+		}
+	
+		
+		public Doctor searchDoc(String n,String surname){
+					
+					Query q1 =em.createNativeQuery("SELECT * FROM doctor WHERE name LIKE ? AND surname LIKE ?",Doctor.class);
+					q1.setParameter(1, "%" + name + "%");
+					q1.setParameter(2, "%" + surname + "%");
+					Doctor d = (Doctor) q1.getSingleResult();
+					return d;
+					
+				}
+		
+		/*public Schedule searchSche(String start, String end){
+			
+			Query q1 =em.createNativeQuery("SELECT * FROM Food WHERE id LIKE ?",Food.class);
+			q1.setParameter(1, "%" + id + "%");
+			Food food = (Food) q1.getSingleResult();
+			return food;
+			
+		}*/
+		
+		//public Visitor searchVis(String name, String surname)
+		//public Doctor searchDoc(String n,String surname)
+		
+		public Illness searchIll(String name){
+			
+			Query q1 =em.createNativeQuery("SELECT * FROM illness WHERE name LIKE ?",Illness.class);
+			q1.setParameter(1, "%" + name + "%");
+			Illness i = (Illness) q1.getSingleResult();
+			return i;
+			
+		}
+		
+		public Chronic searchChro(String name){
+					
+					Query q1 =em.createNativeQuery("SELECT * FROM chronic WHERE name LIKE ?",Chronic.class);
+					q1.setParameter(1, "%" + name + "%");
+					Chronic c = (Chronic) q1.getSingleResult();
+					return c;
+					
+				}
+		
+		
 		
 		public void updatePatient(int id,int room){
 			Query q1 =em.createNativeQuery("SELECT * FROM Patient WHERE id LIKE ?", Patient.class);
