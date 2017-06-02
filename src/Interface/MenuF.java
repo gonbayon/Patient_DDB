@@ -20,7 +20,6 @@ public class MenuF {
             + "6. Delete a food or salt range \n"
             + "7. Search for a food or salt range \n"
             + "8. Update the calories of a food \n"
-            + "9. Drop food or salt tables\n"
             + "Introduce an option:");
     }
 	public void menufood(JDBC j) throws IOException, SQLException {
@@ -103,25 +102,6 @@ public class MenuF {
             	int id=Integer.parseInt(consola.readLine());
             	System.out.println("Enter the new calories the dish is going to have");
             	j.updateFood(id, Integer.parseInt(consola.readLine()));
-            	break;
-            case 9:
-            	System.out.println("Which table do you want to erase:"
-            			+ "\n1. Salt"
-            			+ "\n2. Food"
-            			+ "\n3. Both"
-            			+ "\nIntroduce an option: ");
-            	switch(Integer.parseInt(consola.readLine())){
-            	case 1:
-            		j.dropTableS();
-            		break;
-            	case 2:
-            		j.dropTableF();
-            		break;
-            	case 3:
-            		j.dropTableF();
-            		j.dropTableS();
-            		break;
-            	}
             	break;
         }
 	}
